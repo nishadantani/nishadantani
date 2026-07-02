@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nisha Dantani - Founder & CEO of Rare & Real. Building the future of luxury skincare with Neuro-Rice bio-actives and barrier science.">
+    <meta name="keywords" content="Nisha Dantani, Founder, CEO, Rare & Real, Skincare, Luxury, Entrepreneurship">
+    <meta name="author" content="Nisha Dantani">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Nisha Dantani | Founder & CEO | Rare & Real">
+    <meta property="og:description" content="Every legacy begins with one decision. Building the future of luxury skincare.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nishadantani.com">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nisha Dantani | Founder & CEO | Rare & Real">
+    <meta name="twitter:description" content="Every legacy begins with one decision.">
+    
+    <title>Nisha Dantani | Founder & CEO | Rare & Real</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-deep: #0F172A;
+            --bg-primary: #1E3A5F;
+            --bg-charcoal: #1F2937;
+            --text-white: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(248, 250, 252, 0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--text-white);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-deep);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .loader-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            color: var(--text-white);
+        }
+        
+        .loader-line {
+            width: 0;
+            height: 1px;
+            background: var(--text-white);
+            margin-top: 20px;
+            opacity: 0;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+        
+        nav.scrolled {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 1rem 4rem;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-white);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-white);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--text-white);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 2rem;
+        }
+        
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+        }
+        
+        .hero-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 1rem;
+            opacity: 0;
+        }
+        
+        .hero-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+            opacity: 0;
+        }
+        
+        .hero-tagline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 300;
+            color: var(--text-white);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            line-height: 1.4;
+        }
+        
+        .hero-ctas {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+        }
+        
+        .btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            padding: 1rem 2.5rem;
+            border: none;
+            cursor: none;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--text-white);
+            color: var(--bg-deep);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-white);
+            border: 1px solid rgba(248, 250, 252, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--text-white);
+        }
+        
+        /* Sections Common */
+        section {
+            padding: 8rem 4rem;
+            position: relative;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+        
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Timeline Section */
+        #journey {
+            background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-charcoal) 100%);
+        }
+        
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(248, 250, 252, 0.1), transparent);
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8rem;
+            opacity: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            text-align: right;
+            padding-right: 3rem;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            text-align: left;
+            padding-left: 3rem;
+        }
+        
+        .timeline-year {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: rgba(248, 250, 252, 0.05);
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+        
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--text-white);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(248, 250, 252, 0.2);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+        
+        .timeline-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        
+        .timeline-spacer {
+            width: 10%;
+        }
+        
+        /* Journey Blocks */
+        #story {
+            background: var(--bg-deep);
+        }
+        
+        .story-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            gap: 6rem;
+        }
+        
+        .story-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            opacity: 0;
+        }
+        
+        .story-block:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .story-block:nth-child(even) > * {
+            direction: ltr;
+        }
+        
+        .story-image {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--bg-charcoal) 0%, var(--bg-primary) 100%);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        .story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+        
+        .story-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 40%, rgba(248, 250, 252, 0.03) 50%, transparent 60%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .story-content h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        
+        .story-content p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.9;
+        }
+        
+        .story-line {
+            width: 60px;
+            height: 1px;
+            background: var(--text-white);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Quote Section */
+        #quote {
+            background: var(--bg-charcoal);
+            padding: 12rem 4rem;
+            text-align: center;
+        }
+        
+        .quote-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--text-white);
+        }
+        
+        .quote-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 3rem;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Achievements Section */
+        #achievements {
+            background: var(--bg-deep);
+        }
+        
+        .achievements-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+        
+        .achievement-item {
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+        }
+        
+        .achievement-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .achievement-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+        
+        /* Vision Section */
+        #vision {
+            background: var(--bg-charcoal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #globe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+        }
+        
+        .vision-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .vision-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+        
+        .vision-content p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 2;
+            margin-bottom: 1.5rem;
+        }
+        
+        .vision-timeline {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+        
+        .vision-item {
+            text-align: center;
+        }
+        
+        .vision-year {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .vision-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* Legacy Section */
+        #legacy {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-charcoal) 0%, var(--bg-deep) 100%);
+        }
+        
+        .legacy-content {
+            max-width: 900px;
+            padding: 2rem;
+        }
+        
+        .legacy-year {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 700;
+            color: rgba(248, 250, 252, 0.03);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+        
+        .legacy-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .legacy-quote {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        
+        /* CTA Section */
+        #cta {
+            background: var(--bg-deep);
+            text-align: center;
+            padding: 10rem 4rem;
+        }
+        
+        .cta-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 500;
+            margin-bottom: 3rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--bg-charcoal);
+            padding: 4rem;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        .footer-copy {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-white);
+            z-index: 1001;
+            opacity: 0;
+        }
+        
+        /* Section Indicator */
+        .section-indicator {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+        }
+        
+        .indicator-dot {
+            width: 8px;
+            height: 8px;
+            border: 1px solid rgba(248, 250, 252, 0.3);
+            border-radius: 50%;
+            cursor: none;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator-dot.active {
+            background: var(--text-white);
+            border-color: var(--text-white);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            section {
+                padding: 6rem 2rem;
+            }
+            
+            nav {
+                padding: 1rem 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                flex-direction: column;
+                padding-left: 50px;
+            }
+            
+            .timeline-content,
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                width: 100%;
+                text-align: left;
+                padding: 0;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .story-block,
+            .story-block:nth-child(even) {
+                grid-template-columns: 1fr;
+                direction: ltr;
+            }
+            
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .vision-timeline {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .hero-name {
+                font-size: 2.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-indicator {
+                display: none;
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: none;
+            padding: 0.5rem;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--text-white);
+            margin: 6px 0;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 1024px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-deep);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .mobile-menu a {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            color: var(--text-white);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-text">Every legacy begins with one decision.</div>
+        <div class="loader-line"></div>
+    </div>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+    
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+    
+    <!-- Scroll Progress -->
+    <div class="scroll-progress"></div>
+    
+    <!-- Section Indicator -->
+    <div class="section-indicator">
+        <div class="indicator-dot active" data-section="hero"></div>
+        <div class="indicator-dot" data-section="journey"></div>
+        <div class="indicator-dot" data-section="story"></div>
+        <div class="indicator-dot" data-section="quote"></div>
+        <div class="indicator-dot" data-section="achievements"></div>
+        <div class="indicator-dot" data-section="vision"></div>
+        <div class="indicator-dot" data-section="legacy"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="#hero" class="logo">Nisha Dantani</a>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#journey">Journey</a></li>
+            <li><a href="#vision">Vision</a></li>
+            <li><a href="#legacy">Legacy</a></li>
+        </ul>
+        <button class="mobile-menu-btn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="#hero">Home</a>
+        <a href="#journey">Journey</a>
+        <a href="#vision">Vision</a>
+        <a href="#legacy">Legacy</a>
+    </div>
+    
+    <!-- Hero Section -->
+    <section id="hero">
+        <div id="canvas-container"></div>
+        <div class="hero-content">
+            <div class="hero-subtitle">Founder & CEO</div>
+            <h1 class="hero-name">Nisha Dantani</h1>
+            <div class="hero-title">Rare & Real</div>
+            <p class="hero-tagline">"I don't wait for opportunities.<br>I build them."</p>
+            <div class="hero-ctas">
+                <a href="#journey" class="btn btn-primary">Explore Journey</a>
+                <a href="#vision" class="btn btn-secondary">Read Vision</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Journey Timeline -->
+    <section id="journey">
+        <div class="section-header">
+            <div class="section-label">The Path</div>
+            <h2 class="section-title">From Vision to Reality</h2>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2015</div>
+                    <div class="timeline-dot"></div>
+                    <h3 class="timeline-heading">Early Foundations</h3>
+                    <p class="timeline-text">Began building expertise in human resources, understanding the intricate dynamics of organizational growth and team leadership.</p>
+                </div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2018</div>
+                    <div class="timeline-dot"></div>
+                    <h3 class="timeline-heading">HR Leadership</h3>
+                    <p class="timeline-text">Led strategic HR initiatives, developing deep insights into people dynamics, brand building, and market understanding.</p>
+                </div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-dot"></div>
+                    <h3 class="timeline-heading">Entrepreneurial Spark</h3>
+                    <p class="timeline-text">Identified a significant gap in the luxury skincare market—consumers wanted scientifically-backed, minimal, and effective solutions.</p>
+                </div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-dot"></div>
+                    <h3 class="timeline-heading">Birth of Rare & Real</h3>
+                    <p class="timeline-text">Founded Rare & Real with a singular vision: to merge Neuro-Rice bio-actives with barrier science for transformative skincare.</p>
+                </div>
+                <div class="timeline-spacer"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-dot"></div>
+                    <h3 class="timeline-heading">Global Ambition</h3>
+                    <p class="timeline-text">Secured government startup recognition, engaged with investors, and established hospitality partnerships. The journey to global recognition has begun.</p>
+                </div>
+                <div class="timeline-spacer"></div>
+            </div>
+        </div>
+    </section>
+    
+   <!-- Story Section -->
+<section id="story">
+    <div class="section-header">
+        <div class="section-label">The Story</div>
+        <h2 class="section-title">Building Something Real</h2>
+    </div>
+
+    <div class="story-grid">
+
+        <div class="story-block">
+            <div class="story-image">
+                <img src="Nishadutt1.jpg" alt="Nisha Dantani">
+            </div>
+            <div class="story-content">
+                <div class="story-line"></div>
+                <h3>The Decision</h3>
+                <p>
+                    Entrepreneurship wasn't a choice—it was inevitable. After years in HR,
+                    watching brands make empty promises to consumers, I knew I had to create
+                    something different. Something real. Something that would change how people
+                    think about skincare.
+                </p>
+            </div>
+        </div>
+
+        <div class="story-block">
+            <div class="story-image">
+                <img src="Nishadutt2.jpg" alt="Rare & Real Vision">
+            </div>
+            <div class="story-content">
+                <div class="story-line"></div>
+                <h3>Why Rare & Real Exists</h3>
+                <p>
+                    The skincare industry is flooded with products that promise everything and
+                    deliver nothing. Consumers are stressed, confused, and their skin barriers
+                    are suffering. Rare & Real exists to cut through the noise—with science,
+                    transparency, and a deep respect for the skin's natural intelligence.
+                </p>
+            </div>
+        </div>
+
+        <div class="story-block">
+            <div class="story-image">
+                <img src="Nishadutt3.jpg" alt="Neuro-Rice Research">
+            </div>
+            <div class="story-content">
+                <div class="story-line"></div>
+                <h3>The Neuro-Rice Revolution</h3>
+                <p>
+                    Our proprietary Neuro-Rice bio-actives represent years of research into how
+                    rice-derived compounds can support skin barrier function and promote cellular
+                    wellness. It's not just skincare—it's skin science rooted in ancient wisdom
+                    and modern research.
+                </p>
+            </div>
+        </div>
+
+        <div class="story-block">
+            <div class="story-image">
+                <img src="Nishadutt4.jpg" alt="Customer Value">
+            </div>
+            <div class="story-content">
+                <div class="story-line"></div>
+                <h3>Customer Value</h3>
+                <p>
+                    We believe in minimalism—not just in product formulation, but in the skincare
+                    ritual itself. Fewer products, better science, healthier skin. Our approach is
+                    about empowering consumers with knowledge and giving them tools that actually work.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+    
+    <!-- Quote Section -->
+    <section id="quote">
+        <div class="quote-text">"She built Rare & Real to prove that skincare can be both scientifically considered and deeply human."</div>
+        <div class="quote-author">— The Rare & Real Philosophy</div>
+    </section>
+    
+    <!-- Achievements Section -->
+    <section id="achievements">
+        <div class="section-header">
+            <div class="section-label">Progress</div>
+            <h2 class="section-title">Milestones Achieved</h2>
+        </div>
+        
+        <div class="achievements-grid">
+            <div class="achievement-item">
+                <div class="achievement-number" data-target="1">0</div>
+                <div class="achievement-label">Concept to Market</div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-number" data-target="2">0</div>
+                <div class="achievement-label">Government Startup Applications</div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-number" data-target="15">0</div>
+                <div class="achievement-label">Investor Discussions</div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-number" data-target="5">0</div>
+                <div class="achievement-label">Hospitality Partnerships</div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-number" data-target="3">0</div>
+                <div class="achievement-label">Global Markets Targeted</div>
+            </div>
+            <div class="achievement-item">
+                <div class="achievement-number" data-target="100">0</div>
+                <div class="achievement-label">Percent Luxury Positioning</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Vision Section -->
+    <section id="vision">
+        <div id="globe-container"></div>
+        <div class="section-header">
+            <div class="section-label">The Future</div>
+            <h2 class="section-title">Vision 2040</h2>
+        </div>
+        
+        <div class="vision-content">
+            <p>Rare & Real is not just about skincare—it's about redefining luxury wellness on a global scale. From Indian innovation to worldwide recognition, we're building a legacy that combines scientific excellence with timeless elegance.</p>
+            
+            <div class="vision-timeline">
+                <div class="vision-item">
+                    <div class="vision-year">2028</div>
+                    <div class="vision-desc">Pan-Asia Expansion</div>
+                </div>
+                <div class="vision-item">
+                    <div class="vision-year">2032</div>
+                    <div class="vision-desc">European Markets</div>
+                </div>
+                <div class="vision-item">
+                    <div class="vision-year">2040</div>
+                    <div class="vision-desc">Global Luxury Standard</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Legacy Section -->
+    <section id="legacy">
+        <div class="legacy-year">2040</div>
+        <div class="legacy-content">
+            <h2>By 2040</h2>
+            <p class="legacy-quote">"My goal is to build globally recognized companies, drive innovation, and leave a legacy that inspires future generations of entrepreneurs."</p>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section id="cta">
+        <div class="cta-content">
+            <h2>Let's Build Tomorrow</h2>
+            <a href="mailto:hello@rareandreal.com" class="btn btn-primary">Connect</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">Rare & Real</div>
+        <div class="footer-name">Nisha Dantani — Founder & CEO</div>
+        <div class="footer-copy">© 2024 Rare & Real. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+            cursorDot.style.left = mouseX - 2 + 'px';
+            cursorDot.style.top = mouseY - 2 + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Loader Animation
+        const loaderTl = gsap.timeline();
+        
+        loaderTl
+            .to('.loader-text', { opacity: 1, duration: 1, ease: 'power2.out' })
+            .to('.loader-line', { width: '200px', opacity: 1, duration: 1.5, ease: 'power4.out' }, '-=0.5')
+            .to('.loader', { opacity: 0, duration: 0.8, ease: 'power2.in', delay: 0.5 })
+            .set('.loader', { display: 'none' })
+            .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3')
+            .to('.hero-name', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6')
+            .to('.hero-title', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.7')
+            .to('.hero-tagline', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+            .to('.hero-ctas', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6');
+        
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const progress = document.querySelector('.scroll-progress');
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progress.style.width = scrollPercent + '%';
+            progress.style.opacity = 1;
+        });
+        
+        // Section Indicator
+        const sections = document.querySelectorAll('section');
+        const indicatorDots = document.querySelectorAll('.indicator-dot');
+        
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    indicatorDots.forEach(dot => {
+                        dot.classList.remove('active');
+                        if (dot.dataset.section === sectionId) {
+                            dot.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        sections.forEach(section => sectionObserver.observe(section));
+        
+        // Timeline Animation
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach((item, index) => {
+            gsap.to(item, {
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: index * 0.2
+            });
+        });
+        
+        // Story Blocks Animation
+        const storyBlocks = document.querySelectorAll('.story-block');
+        storyBlocks.forEach((block, index) => {
+            gsap.to(block, {
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: block,
+                    start: 'top 75%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: index * 0.15
+            });
+        });
+        
+        // Quote Animation
+        gsap.from('.quote-text', {
+            opacity: 0,
+            y: 50,
+            scrollTrigger: {
+                trigger: '#quote',
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 1.2,
+            ease: 'power3.out'
+        });
+        
+        // Achievements Counter
+        const achievementNumbers = document.querySelectorAll('.achievement-number');
+        achievementNumbers.forEach(num => {
+            const target = parseInt(num.dataset.target);
+            
+            ScrollTrigger.create({
+                trigger: num,
+                start: 'top 80%',
+                onEnter: () => {
+                    gsap.to(num, {
+                        innerHTML: target,
+                        duration: 2,
+                        snap: { innerHTML: 1 },
+                        ease: 'power2.out'
+                    });
+                },
+                once: true
+            });
+        });
+        
+        // Achievements fade in
+        const achievementItems = document.querySelectorAll('.achievement-item');
+        achievementItems.forEach((item, index) => {
+            gsap.to(item, {
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: index * 0.1
+            });
+        });
+        
+        // Vision Animation
+        gsap.from('.vision-content', {
+            opacity: 0,
+            y: 50,
+            scrollTrigger: {
+                trigger: '#vision',
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 1.2,
+            ease: 'power3.out'
+        });
+        
+        // Legacy Animation
+        gsap.from('.legacy-content h2', {
+            opacity: 0,
+            y: 50,
+            scrollTrigger: {
+                trigger: '#legacy',
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 1,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.legacy-quote', {
+            opacity: 0,
+            y: 30,
+            scrollTrigger: {
+                trigger: '#legacy',
+                start: 'top 60%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 1,
+            delay: 0.3,
+            ease: 'power3.out'
+        });
+        
+        // CTA Animation
+        gsap.from('.cta-content', {
+            opacity: 0,
+            y: 50,
+            scrollTrigger: {
+                trigger: '#cta',
+                start: 'top 70%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 1,
+            ease: 'power3.out'
+        });
+        
+        // Mobile Menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        let menuOpen = false;
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileMenu.classList.add('active');
+                mobileMenuBtn.querySelectorAll('span')[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                mobileMenuBtn.querySelectorAll('span')[1].style.opacity = '0';
+                mobileMenuBtn.querySelectorAll('span')[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.querySelectorAll('span')[0].style.transform = 'none';
+                mobileMenuBtn.querySelectorAll('span')[1].style.opacity = '1';
+                mobileMenuBtn.querySelectorAll('span')[2].style.transform = 'none';
+            }
+        });
+        
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuOpen = false;
+                mobileMenuBtn.querySelectorAll('span')[0].style.transform = 'none';
+                mobileMenuBtn.querySelectorAll('span')[1].style.opacity = '1';
+                mobileMenuBtn.querySelectorAll('span')[2].style.transform = 'none';
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    gsap.to(window, {
+                        scrollTo: { y: target, offsetY: 50 },
+                        duration: 1.5,
+                        ease: 'power4.out'
+                    });
+                }
+            });
+        });
+        
+        // Three.js - Hero 3D Object
+        const initThreeJS = () => {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+            
+            // Create abstract flowing sculpture
+            const geometry = new THREE.IcosahedronGeometry(1, 4);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x1E3A5F,
+                metalness: 0.9,
+                roughness: 0.1,
+                wireframe: false,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            
+            // Create wireframe overlay
+            const wireframeMaterial = new THREE.MeshBasicMaterial({
+                color: 0xF8FAFC,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.1
+            });
+            const wireframeSphere = new THREE.Mesh(geometry.clone(), wireframeMaterial);
+            wireframeSphere.scale.setScalar(1.05);
+            scene.add(wireframeSphere);
+            
+            // Create particle system
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 500;
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xF8FAFC,
+                transparent: true,
+                opacity: 0.4
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+            scene.add(ambientLight);
+            
+            const pointLight1 = new THREE.PointLight(0x1E3A5F, 2, 100);
+            pointLight1.position.set(5, 5, 5);
+            scene.add(pointLight1);
+            
+            const pointLight2 = new THREE.PointLight(0xF8FAFC, 1, 100);
+            pointLight2.position.set(-5, -5, 5);
+            scene.add(pointLight2);
+            
+            camera.position.z = 5;
+            
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+            
+            // Animation
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                targetX += (mouseX * 0.3 - targetX) * 0.05;
+                targetY += (mouseY * 0.3 - targetY) * 0.05;
+                
+                sphere.rotation.x += 0.002;
+                sphere.rotation.y += 0.003;
+                sphere.rotation.x += targetY * 0.01;
+                sphere.rotation.y += targetX * 0.01;
+                
+                wireframeSphere.rotation.x = sphere.rotation.x;
+                wireframeSphere.rotation.y = sphere.rotation.y;
+                
+                // Subtle breathing animation
+                const scale = 1 + Math.sin(Date.now() * 0.001) * 0.05;
+                sphere.scale.setScalar(scale);
+                
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+            
+            // Resize handler
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+        
+        // Three.js - Globe for Vision Section
+        const initGlobe = () => {
+            const container = document.getElementById('globe-container');
+            if (!container) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+            
+            // Create globe
+            const geometry = new THREE.SphereGeometry(3, 64, 64);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x1E3A5F,
+                metalness: 0.8,
+                roughness: 0.2,
+                transparent: true,
+                opacity: 0.6,
+                wireframe: true
+            });
+            
+            const globe = new THREE.Mesh(geometry, material);
+            scene.add(globe);
+            
+            // Add points on globe
+            const pointsMaterial = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0xF8FAFC,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const pointsGeometry = new THREE.BufferGeometry();
+            const pointsCount = 200;
+            const posArray = new Float32Array(pointsCount * 3);
+            
+            for (let i = 0; i < pointsCount; i++) {
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos(2 * Math.random() - 1);
+                const r = 3;
+                
+                posArray[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+                posArray[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+                posArray[i * 3 + 2] = r * Math.cos(phi);
+            }
+            
+            pointsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const points = new THREE.Points(pointsGeometry, pointsMaterial);
+            scene.add(points);
+            
+            camera.position.z = 8;
+            
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                globe.rotation.y += 0.002;
+                points.rotation.y += 0.002;
+                
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = container.offsetWidth / container.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+            });
+        };
+        
+        // Initialize Three.js after loader
+        setTimeout(() => {
+            initThreeJS();
+            initGlobe();
+        }, 2500);
+        
+        // GSAP ScrollToPlugin alternative (built into GSAP 3)
+        // Using native smooth scroll as fallback
+    </script>
+</body>
+</html>
